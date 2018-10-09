@@ -1,5 +1,4 @@
-
-        
+import datetime   
 def verificacionDatos(age,sex,weeksC):
     if(sex.lower() == "m" and int(age) >= 60 and int(weeksC)>=750):
         print("SI")
@@ -9,12 +8,17 @@ def verificacionDatos(age,sex,weeksC):
         print("NO")
 
 
+def calculoEdad(fecha):
+    fecha = fecha.split('/')[2]
+    now = datetime.datetime.now()
+    edad = int(now.year) - int(fecha)
+    return edad
 
 
 def main():
     opcion = input("Ingrese la opcion 1 para ingresar datos por consola, ingrese dos para cargar un archivo de texto: ")
     if(opcion == "1"):
-        edad = input("Imgrese fecha de nacimiento (XX/XX/XXXX): ")
+        edad = calculoEdad(input("Imgrese fecha de nacimiento (XX/XX/XXXX): "))
         sexo = input("Ingrese su sexo: ")
         semCoti = input("Ingrese el numero de semanas cotizadas: ")
         descontEdad = input("Ha trabajado usted en medios insalubres o capaces de producir vejez prematura?")

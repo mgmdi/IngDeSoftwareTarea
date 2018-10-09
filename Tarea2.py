@@ -24,18 +24,28 @@ def calculoEdad(fecha):
 
     return edad
 
+
+
 def main():
     opcion = input("Ingrese la opcion 1 para ingresar datos por consola, ingrese dos para cargar un archivo de texto: ")
     if(opcion == "1"):
         edad = calculoEdad(input("Imgrese fecha de nacimiento (XX/XX/XXXX): "))
         sexo = input("Ingrese su sexo: ")
+        if sexo.lower() not in ["m","f","femenino","masculino"]:
+            print("Error, debe indicar su sexo de la forma F o M. Femenino o Masculino")
+            exit()
         semCoti = input("Ingrese el numero de semanas cotizadas: ")
+        if not(semCoti.isdigit()):
+            print("Error, las semanas cotiza deben estar en formato numerico.")
+            exit()
         descontEdad = input("Ha trabajado usted en medios insalubres o capaces de producir vejez prematura?")
+        if descontEdad.lower() not in ["si","no"]:
+            print("Error, la respuesta debe ser si o no")
+            exit()
         if(descontEdad.lower() == "si"):
             numAnos = input("Indique el numero de anos que trabajo: ")
             if(numAnos > 4):
-                menosAnos = numAnos // 4
-                edad = edad - menosAnos
+                edad = edad - (int(numAnos) // 4)
                 print("Se le ha descontado " + menosAnos + "de la edad considerada")
         verificacionDatos(edad,sexo,weeksC)
     elif(opcion == "2"):
@@ -43,7 +53,16 @@ def main():
         file = open(nombre, "r")
         for line in file:
             datos = line.split()
-            verificacionDatos(datos[0],datos[1],datos[2])
+            edad = calculoEdad(datos[0])
+            if(len(datos) == 5):
+                edad = edad - (int(datos[4])//4)
+            if datos[1].lower() not in ["m","f","femenino","masculino"]:
+                print("Error en los datos del archivo")
+                exit()
+            elif not(datos[2].isdigit()):
+                print("Error en los datos del archivo")
+                exit()
+            verificacionDatos(edad,datos[1],datos[2])
     else:
         print("Error, debe ingresar 1 o 2")
        

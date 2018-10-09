@@ -15,6 +15,6 @@ switch(opcion){
                 print("Se le ha descontado " + menosAnos + "de la edad considerada")
     case 2:
         nombre = input("Ingrese nombre del archivo: ")
-        
+        print(nombre)
 
 }

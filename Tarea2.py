@@ -1,4 +1,5 @@
 import datetime   
+
 def verificacionDatos(age,sex,weeksC):
     if(sex.lower() == "m" and int(age) >= 60 and int(weeksC)>=750):
         print("SI")
@@ -7,13 +8,21 @@ def verificacionDatos(age,sex,weeksC):
     else:
         print("NO")
 
-
 def calculoEdad(fecha):
-    fecha = fecha.split('/')[2]
-    now = datetime.datetime.now()
-    edad = int(now.year) - int(fecha)
-    return edad
+    # Fecha debe ser del tipo XX/XX/XXXX donde x es un entero, verifiquemoslo:
+    fecha = fecha.split('/')
+    if(len(fecha)== 3):
+        if(fecha[0].isdigit() and fecha[1].isdigit() and fecha[2].isdigit()):
+            now = datetime.datetime.now()
+            edad = int(now.year) - int(fecha[2])
+        else:
+            print("Error, la fecha debe seguir el formato indicado.")
+            exit()
+    else:
+        print("Error, la fecha debe seguir el formato indicado.")
+        exit()
 
+    return edad
 
 def main():
     opcion = input("Ingrese la opcion 1 para ingresar datos por consola, ingrese dos para cargar un archivo de texto: ")
@@ -35,6 +44,8 @@ def main():
         for line in file:
             datos = line.split()
             verificacionDatos(datos[0],datos[1],datos[2])
-
+    else:
+        print("Error, debe ingresar 1 o 2")
+       
 if __name__ == '__main__':
     main()  

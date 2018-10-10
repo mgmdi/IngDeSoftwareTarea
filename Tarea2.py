@@ -1,12 +1,20 @@
 import datetime   
 
-def verificacionDatos(age,sex,weeksC):
-    if(sex.lower() == "m" and int(age) >= 60 and int(weeksC)>=750):
-        return("SI")
-    elif(sex.lower() == "f" and int(age) >= 55 and int(weeksC)>=750):
-        return("SI")
+def verificacionDatos(age,sex,weeksC,indicador):
+    if(not(indicador)):
+        if(sex.lower() == "m" and int(age) >= 60 and int(weeksC)>=750):
+            return("SI")
+        elif(sex.lower() == "f" and int(age) >= 55 and int(weeksC)>=750):
+            return("SI")
+        else:
+            return("NO")
     else:
-        return("NO")
+        if(sex.lower() == "m" and int(age) >= 55 and int(weeksC)>=750):
+            return("SI")
+        elif(sex.lower() == "f" and int(age) >= 50 and int(weeksC)>=750):
+            return("SI")
+        else:
+            return("NO")
         
 
 def calculoEdad(fecha):
@@ -52,22 +60,24 @@ def main():
             if(numAnos > 4):
                 edad = edad - (int(numAnos) // 4)
                 print("Se le ha descontado " + menosAnos + "de la edad considerada")
-        verificacionDatos(edad,sexo,weeksC)
+        verificacionDatos(edad,sexo,weeksC,descontEdad)
     elif(opcion == "2"):
         nombre = input("Ingrese nombre del archivo: ")
         file = open(nombre, "r")
         for line in file:
             datos = line.split()
             edad = calculoEdad(datos[0])
-            if(len(datos) == 5):
-                edad = edad - (int(datos[4])//4)
             if datos[1].lower() not in ["m","f","femenino","masculino"]:
                 print("Error en los datos del archivo")
                 exit()
             elif not(datos[2].isdigit()):
                 print("Error en los datos del archivo")
                 exit()
-            verificacionDatos(edad,datos[1],datos[2])
+            if(len(datos) == 5 and datos[3].lower() == "si"):
+                edad = edad - (int(datos[4])//4)
+                verificacionDatos(edad,datos[1],datos[2], True)
+                return
+            verificacionDatos(edad,datos[1],datos[2], False)
     else:
         print("Error, debe ingresar 1 o 2")
        

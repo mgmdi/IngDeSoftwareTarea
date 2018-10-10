@@ -2,11 +2,12 @@ import datetime
 
 def verificacionDatos(age,sex,weeksC):
     if(sex.lower() == "m" and int(age) >= 60 and int(weeksC)>=750):
-        print("SI")
+        return("SI")
     elif(sex.lower() == "f" and int(age) >= 55 and int(weeksC)>=750):
-        print("SI")
+        return("SI")
     else:
-        print("NO")
+        return("NO")
+        
 
 def calculoEdad(fecha):
     # Fecha debe ser del tipo XX/XX/XXXX donde x es un entero, verifiquemoslo:
@@ -14,7 +15,11 @@ def calculoEdad(fecha):
     if(len(fecha)== 3):
         if(fecha[0].isdigit() and fecha[1].isdigit() and fecha[2].isdigit()):
             now = datetime.datetime.now()
-            edad = int(now.year) - int(fecha[2])
+            if(int(fecha[1])<= now.month):
+                edad = int(now.year) - int(fecha[2])
+            else:
+                edad = int(now.year) - int(fecha[2]) - 1
+            
         else:
             print("Error, la fecha debe seguir el formato indicado.")
             exit()

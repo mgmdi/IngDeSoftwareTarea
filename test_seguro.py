@@ -17,20 +17,34 @@ class TestSeguro(unittest.TestCase):
         self.assertEqual(Tarea2.calculoEdad("30/12/1940"), 77)  
 
 
-    def test_verificacionDatos(self):
+    def test_verificacionDatosNF(self):
+
+        self.assertEqual(Tarea2.verificacionDatos(56,"f",800,False), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(70,"m",50,False), "NO")
+        self.assertEqual(Tarea2.verificacionDatos(80,"f",1000,False), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(50,"f",800,False), "NO")
+        self.assertEqual(Tarea2.verificacionDatos(40,"m",500,False), "NO")
+        self.assertEqual(Tarea2.verificacionDatos(63,"f",800,False), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(78,"f",600,False), "NO")
+        self.assertEqual(Tarea2.verificacionDatos(66,"m",800,False), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(58,"m",800,False), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(40,"f",800,False), "SI")
+
+
+    def test_verificacionDatosF(self):
+        """
+        Funcion con casos frontera.
+        Los casos frontera se definen como la minima edad y minimo numero de cotizaciones
+        que se debe tener para optar por el seguro.
+        Se considera la minima edad como 55 para hombres (con 5 anos maximos de disminucion por trabajo
+        en medios insalubres) y 50 para las mujeres por la misma razon. 
+        """
+
+        self.assertEqual(Tarea2.verificacionDatos(55,"f",750,True), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(50,"f",750,True), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(60,"m",750,True), "SI")
+        self.assertEqual(Tarea2.verificacionDatos(55,"m",750,True), "SI")
         
-        self.assertEqual(Tarea2.verificacionDatos(56,"f",800), "SI")
-        self.assertEqual(Tarea2.verificacionDatos(70,"m",50), "NO")
-        self.assertEqual(Tarea2.verificacionDatos(80,"f",1000), "SI")
-        self.assertEqual(Tarea2.verificacionDatos(50,"f",800), "NO")
-        self.assertEqual(Tarea2.verificacionDatos(40,"m",500), "NO")
-        self.assertEqual(Tarea2.verificacionDatos(63,"f",800), "SI")
-        self.assertEqual(Tarea2.verificacionDatos(78,"f",600), "NO")
-        self.assertEqual(Tarea2.verificacionDatos(66,"m",800), "SI")
-        self.assertEqual(Tarea2.verificacionDatos(58,"m",800), "SI")
-        self.assertEqual(Tarea2.verificacionDatos(40,"f",800), "SI")
-
-
 
 if __name__ == '__main__':
     unittest.main()  

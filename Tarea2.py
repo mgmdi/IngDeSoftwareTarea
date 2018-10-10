@@ -82,4 +82,4 @@ def main():
         print("Error, debe ingresar 1 o 2")
        
 if __name__ == '__main__':
-    main()  
+    main() 

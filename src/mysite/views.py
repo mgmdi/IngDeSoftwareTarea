@@ -53,10 +53,10 @@ def login_user(request):
 
     email = request.POST['email']
     password = request.POST['password']
-    user = seguridad.ingresarUsuario()
+    user = seguridad.ingresarUsuario(email,password)
     if user:
         context['registrado'] = True
-        context['user'] = user
+        context['user'] = email
         return render(request, 'mysite/home.html',context)
     
      # Le paso la variable al template como un diccionario, si es true entonces muestra logout

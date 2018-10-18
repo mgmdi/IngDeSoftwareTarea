@@ -17,3 +17,9 @@ class UserRegistrationForm(forms.Form):
         max_length = 32,
         widget = forms.PasswordInput()
     )
+    passwordValidate = forms.CharField(
+        required = True,
+        label = 'Password validation',
+        max_length = 32,
+        widget = forms.PasswordInput()
+    )

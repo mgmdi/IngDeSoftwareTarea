@@ -32,6 +32,24 @@ class Seguridad:
             print("String is not accepted.") 
 
     def validPassword(self, password):
+        mayus = 0
+        minus = 0
+        digitos = 0
+        listMin = list(string.ascii_lowercase)
+        listMayus = list(string.ascii_uppercase)
+        for c in password:
+            if c in listMayus:
+                mayus += 1
+            elif c in listMin:
+                minus += 1
+            elif c in [0,9]:
+                digitos += 1
+
+        if mayus + minus >= 3 and minus > 0 and mayus > 0 and digitos:
+            return True
+
+        else:
+            return False
 
 
 

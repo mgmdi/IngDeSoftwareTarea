@@ -4,12 +4,41 @@ class Seguridad:
 
 
     def __init__(self):
-        usuariosRegistrados = {}
+        self.usuariosRegistrados = {}
 
 
-    def registrarUsiario(self, email, password1, password2):
+    def registrarUsuario(self, username, email, password1, password2):
+
+        correoValido = self.checkEmail(email)
+        passwordsIguales = self.coincidePasswords(password1,password2)
+        sinCaracteresEspeciales = self.checkSpecialChar(password1)
+        contrasenaValida = self.coincidePasswords(password1,password2)
+
+        if correoValido:
+            if passwordsIguales and sinCaracteresEspeciales and contrasenaValida and self.checkLength(password1):
+                clave = self.claveCodificada(password1)
+                self.usuariosRegistrados[email] = clave
+                return True
+
+        return False
 
 
+    def ingresarUsuario(self, correo, clave):
+
+        userValido = False
+        claveValida = False
+        for email in self.usuariosRegistrados:
+            if correo == email:
+                userValido = True
+                if self.usuariosRegistrados[email] == self.claveCodificada(clave):
+                    claveValida = True
+
+        if not userValido:
+            return "User invalido"
+        elif not claveValida:
+            return "Clave invalida"
+        else:
+            return True
 
 
     def coincidePasswords(sefl, password1, password2):
@@ -17,19 +46,13 @@ class Seguridad:
         
 
     def checkLength(self,password):
-        return len(password) in [8,16]
+        return len(password) in range(8,17)
         
 
-
     def checkSpecialChar(self, password):
- 
         regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]') 
+        return(regex.search(password) == None)
          
-        if(regex.search(password) == None): 
-            print("String is accepted") 
-            
-        else: 
-            print("String is not accepted.") 
 
     def validPassword(self, password):
         mayus = 0
@@ -52,12 +75,14 @@ class Seguridad:
             return False
 
 
-
-
     def checkEmail(self, email):
-        return re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email)
+        if re.match(r"(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)", email) == None:
+            return False
+        return True
+        
     
-    
+    def claveCodificada(self, password):
+        return password[::-1] 
         
 
     

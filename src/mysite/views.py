@@ -19,6 +19,7 @@ def register(request):
             username = userObj['username']
             email =  userObj['email']
             password =  userObj['password']
+            passwordValidate = userObj['passwordValidate']
             if not (User.objects.filter(username=username).exists() or User.objects.filter(email=email).exists()):
                 User.objects.create_user(username, email, password)
                 user = authenticate(username = username, password = password)
@@ -31,3 +32,13 @@ def register(request):
         form = UserRegistrationForm()
 
     return render(request, 'mysite/register.html', {'form' : form})
+
+def login_user(request):
+
+    username = request.POST['username']
+    password = request.POST['password']
+    user = authenticate(username=username, password=password)
+    if user is not None:
+        if user.is_active:
+            login(request,user)
+     

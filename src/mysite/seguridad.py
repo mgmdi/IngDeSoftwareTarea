@@ -22,6 +22,10 @@ class Seguridad:
 
         return False
 
+    def usuarioYaRegistrado(self,email):
+        if email in self.usuariosRegistrados:
+            return True
+        return False
 
     def ingresarUsuario(self, correo, clave):
 
@@ -32,7 +36,6 @@ class Seguridad:
                 userValido = True
                 if self.usuariosRegistrados[email] == self.claveCodificada(clave):
                     claveValida = True
-
         if not userValido:
             return "User invalido"
         elif not claveValida:
@@ -84,5 +87,3 @@ class Seguridad:
     def claveCodificada(self, password):
         return password[::-1] 
         
-
-    

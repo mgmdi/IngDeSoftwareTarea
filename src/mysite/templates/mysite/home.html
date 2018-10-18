@@ -6,9 +6,9 @@
 </head>
 
 <body>
-    {% if user.is_authenticated %}
+    {% if registrado  %}
     <p>hello</p>
-    <p>welcome {{ user.username }}</p>
+    <p>welcome {{user}} </p>
     <p><a href="/logout">Logout</a></p>
     {% else %}
     <p><a href="/login">Login</a></p>

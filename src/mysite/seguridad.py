@@ -45,7 +45,7 @@ class Seguridad:
             elif c in [0,9]:
                 digitos += 1
 
-        if mayus + minus >= 3 and minus > 0 and mayus > 0 and digitos:
+        if mayus + minus >= 3 and minus > 0 and mayus > 0 and digitos > 0:
             return True
 
         else:

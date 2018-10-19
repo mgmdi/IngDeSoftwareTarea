@@ -8,6 +8,7 @@ from .forms import UserRegistrationForm
 from . import seguridad as security
 # Create your views here.
 
+global seguridad
 seguridad = security.Seguridad()
 
 def home(request):
@@ -16,7 +17,7 @@ def home(request):
     context['user'] = ''
     return render(request, 'mysite/home.html', context)
 
-def register(request):
+def register(request, **kwargs):
     context = {}
     
     if request.method == 'POST':
@@ -50,14 +51,17 @@ def register(request):
     return render(request, 'mysite/register.html', {'form' : form})
 
 def login_user(request):
-
-    email = request.POST['email']
-    password = request.POST['password']
-    user = seguridad.ingresarUsuario(email,password)
-    if user:
-        context['registrado'] = True
-        context['user'] = email
-        return render(request, 'mysite/home.html',context)
+    context = {}
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        user = seguridad.ingresarUsuario(email,password)
+        if user:
+            context['registrado'] = True
+            context['user'] = email
+            return render(request, 'mysite/home.html',context)
+    else:
+        return render(request, 'registration/login.html')
     
      # Le paso la variable al template como un diccionario, si es true entonces muestra logout
      # sino lo demas el cambio es en home
